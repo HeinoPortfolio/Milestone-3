@@ -24,7 +24,7 @@ export function Recipe({ title, author, ingredientList, imageURL }) {
         </em>
       )}
       <div>
-        <img src={imageURL} alt='' />
+        <img src={imageURL} width='200' height='150' alt={title} />
       </div>
     </article>
   )
