@@ -15,8 +15,12 @@ export function CreateRecipe() {
   // Create the recipe mutation for creating the new recipe ===================
   const createRecipeMutation = useMutation({
     mutationFn: () => createRecipe({ title, author, ingredientList, imageURL }),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(['recipes']),
+        // Review the data returned after creation
+        console.log('Recipe ID data: ', data._id),
+        console.log('Author ID data: ', data.author),
+        console.log('Image URL line: ', data.imageURL),
         // Set fields to empty =========================
         setTitle(''),
         setIngredientList(''),
