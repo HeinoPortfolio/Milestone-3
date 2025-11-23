@@ -2,19 +2,17 @@ import { RecipeList } from './components/RecipeList.jsx'
 import { CreateRecipe } from './components/CreateRecipe.jsx'
 import { RecipeFilter } from './components/RecipeFilter.jsx'
 import { RecipeSorting } from './components/RecipeSorting.jsx'
-import { getRecipes } from './api/recipes.js'
 import { useQuery } from '@tanstack/react-query'
+import { getRecipes } from './api/recipes.js'
 import { useState } from 'react'
 
 export function Blog() {
-  // Use states of the Blog application ===================
+  // Use states of the BLog application ===================
   /* 
     Note:  The default states are the following:
-
     -- author, setAuthor: undefined
-    -- sortBy, setSortby: created at date ['createdAt']
+    -- sortBy, setSortby: created at date ['createdAt]
     -- sortOrder, setSortOrder: descending 
-
   */
   const [author, setAuthor] = useState('')
   const [sortBy, setSortBy] = useState('createdAt')
@@ -45,6 +43,7 @@ export function Blog() {
         onChange={(value) => setAuthor(value)}
       />
       <br />
+      <hr />
       <RecipeSorting
         fields={['createdAt', 'updatedAt']}
         value={sortBy}
@@ -53,7 +52,6 @@ export function Blog() {
         onOrderChange={(orderValue) => setSortOrder(orderValue)}
       />
       <hr />
-      <h2>Click on one of the recipes below to see more information.</h2>{' '}
       <div
         style={{
           maxHeight: '600px',
@@ -64,7 +62,6 @@ export function Blog() {
           padding: '50px',
         }}
       >
-        {' '}
         <RecipeList recipes={recipes} />
       </div>
     </div>
