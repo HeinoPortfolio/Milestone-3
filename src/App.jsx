@@ -1,35 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { RecipeList } from './components/RecipeList.jsx'
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  // Create some test recipes =============================================
+  const recipes = [
+    {
+      title: 'This is a test recipe title',
+      ingredientList: 'Some ingredients go here. \nSome others go here.',
+      author: 'Matthew Heino',
+      imageURL: 'http://someUrl1.com',
+    },
+    {
+      title: 'This is another test recipe title',
+      ingredientList: 'Some other ingredients go here. \nMore go here.',
+      author: 'Claudia Heino',
+      imageURL: 'http://someUrl1.com',
+    },
+  ]
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <RecipeList recipes={recipes} />
 }
-
-export default App
