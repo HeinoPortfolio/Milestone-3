@@ -7,12 +7,16 @@
     -- Application will return the application wrapping the orignal application
 
 */
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+// Pages for the application =================================================
 import { Blog } from './pages/Blog.jsx'
 import { Signup } from './pages/Signup.jsx'
-
+import { Login } from './pages/Login.jsx'
 // Import router libray functions =============================================
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+// Provide the token ==========================================================
+import { AuthContextProvider } from './contexts/AuthContext.jsx'
 
 // Create a new query client to call the backend ==============================
 const queryClient = new QueryClient()
@@ -23,22 +27,23 @@ const router = createBrowserRouter([
     path: '/',
     element: <Blog />,
   },
-
   {
     path: '/signup',
     element: <Signup />,
-  } /*
+  },
   {
     path: '/login',
     element: <Login />,
-  },*/,
+  },
 ])
 
 // The application function ===========
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
     </QueryClientProvider>
   )
 }
