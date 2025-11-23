@@ -7,9 +7,9 @@
     -- Application will return the application wrapping the orignal application
 
 */
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Blog } from './Blog.jsx'
+import { Blog } from './pages/Blog.jsx'
+import { Signup } from './pages/Signup.jsx'
 
 // Import router libray functions =============================================
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -24,15 +24,14 @@ const router = createBrowserRouter([
     element: <Blog />,
   },
 
-  /*
   {
     path: '/signup',
     element: <Signup />,
-  }, 
+  } /*
   {
     path: '/login',
     element: <Login />,
-  },*/
+  },*/,
 ])
 
 // The application function ===========
