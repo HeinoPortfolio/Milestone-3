@@ -54,10 +54,11 @@ export function Blog() {
         onOrderChange={(orderValue) => setSortOrder(orderValue)}
       />
       <hr />
+      <h2>Click on one of the recipes below to see more information.</h2>
       <div
         style={{
           maxHeight: '600px',
-          maxWidth: '800px',
+          maxWidth: '600px',
           overflowY: 'scroll',
           overflowX: 'scroll',
           border: '3px solid #ccc',

@@ -2,13 +2,14 @@ import { Blog } from './pages/Blog.jsx'
 import { Signup } from './pages/Signup.jsx'
 import { Login } from './pages/Login.jsx'
 import { useLoaderData } from 'react-router-dom'
-import { getRecipes } from './api/recipes.js'
 import { getUserInfo } from './api/users.js'
 import {
   QueryClient,
   dehydrate,
   HydrationBoundary,
 } from '@tanstack/react-query'
+import { getRecipeById, getRecipes } from './api/recipes.js'
+import { ViewRecipe } from './pages/ViewRecipe.jsx'
 
 // Create a router variable ===================================================
 export const routes = [
@@ -25,7 +26,7 @@ export const routes = [
         queryFn: () => recipes,
       })
       const uniqueAuthors = recipes
-        .map((recipe) => recipe.author)
+        .map((post) => post.author)
         .filter((value, index, array) => array.indexOf(value) === index)
       for (const userId of uniqueAuthors) {
         await queryClient.prefetchQuery({
@@ -51,5 +52,40 @@ export const routes = [
   {
     path: '/login',
     element: <Login />,
+  },
+
+  // Recipe by ID ===================================================
+  {
+    path: '/recipes/:recipeId',
+
+    loader: async ({ params }) => {
+      const recipeId = params.recipeId
+      const queryClient = new QueryClient()
+      const recipe = await getRecipeById(recipeId)
+
+      await queryClient.prefetchQuery({
+        queryKey: ['recipe', recipeId],
+        queryFn: () => getUserInfo(recipe.author),
+      })
+
+      if (recipe?.author) {
+        await queryClient.prefetchQuery({
+          queryKey: ['users', recipe.author],
+          queryFn: () => getUserInfo(recipe.author),
+        })
+      }
+
+      return { dehydratedState: dehydrate(queryClient), recipeId }
+    },
+
+    Component() {
+      const { dehydratedState, recipeId } = useLoaderData()
+
+      return (
+        <HydrationBoundary state={dehydratedState}>
+          <ViewRecipe recipeId={recipeId} />
+        </HydrationBoundary>
+      )
+    },
   },
 ] // end router variable
