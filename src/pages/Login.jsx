@@ -49,6 +49,7 @@ export function Login() {
           name='create-username'
           id='create-username'
           value={username}
+          autoComplete='off'
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -60,6 +61,7 @@ export function Login() {
           name='create-password'
           id='create-password'
           value={password}
+          autoComplete='off'
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>

@@ -1,30 +1,32 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createRecipe } from '../api/recipes.js'
+import { useAuth } from '../contexts/AuthContext.jsx'
 
 export function CreateRecipe() {
   // Create the states=========================================================
   const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
   const [ingredientList, setIngredientList] = useState('')
   const [imageURL, setImageURL] = useState('')
+
+  // Get the authentication context ===========================================
+  const [token] = useAuth()
 
   // Create the query client ==================================================
   const queryClient = useQueryClient()
 
   // Create the recipe mutation for creating the new recipe ===================
   const createRecipeMutation = useMutation({
-    mutationFn: () => createRecipe({ title, author, ingredientList, imageURL }),
+    mutationFn: () => createRecipe(token, { title, ingredientList, imageURL }),
     onSuccess: (data) => {
       queryClient.invalidateQueries(['recipes']),
         // Review the data returned after creation
         console.log('Recipe ID data: ', data._id),
         console.log('Author ID data: ', data.author),
-        console.log('Image URL line: ', data.imageURL),
-        // Set fields to empty =========================
-        setTitle(''),
-        setIngredientList(''),
-        setImageURL('')
+        console.log('Image URL link: ', data.imageURL),
+        console.log('Contents of ingredient list: ', data.ingredientList)
+      // Set fields to empty =========================
+      setTitle(''), setIngredientList(''), setImageURL('')
     },
   })
 
@@ -33,6 +35,9 @@ export function CreateRecipe() {
     e.preventDefault()
     createRecipeMutation.mutate()
   }
+
+  // If there is no token ask to create an account
+  if (!token) return <div>Please login to create a new recipe.</div>
 
   // Form for creating the new recipe =========================================
   return (
@@ -46,23 +51,11 @@ export function CreateRecipe() {
           name='create-title'
           id='create-title'
           value={title}
+          autoComplete='off'
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
       <br />
-      <div>
-        <label htmlFor='create-author'>
-          {' '}
-          <b>Author: </b>
-        </label>
-        <input
-          type='text'
-          name='create-author'
-          id='create-author'
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-      </div>
       <br />
       <div>
         <label htmlFor='create-imageURL'>
@@ -73,11 +66,12 @@ export function CreateRecipe() {
           name='create-imageURL'
           id='create-imageURL'
           value={imageURL}
+          autoComplete='off'
           onChange={(e) => setImageURL(e.target.value)}
         />
       </div>
       <br />
-      <label htmlFor='recipe-box'>
+      <label htmlFor='recibe-box'>
         <b>Enter the recipe&#39;s ingredients below: </b>
       </label>
       <br />
