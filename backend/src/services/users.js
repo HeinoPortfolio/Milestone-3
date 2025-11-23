@@ -9,6 +9,17 @@ export async function createUser({ username, password }) {
   return await user.save()
 } // end create user
 
+// Get user information by ID service function ================================
+export async function getUserInfoById(userId) {
+  try {
+    const user = await User.findById(userId)
+    if (!user) return { username: userId }
+    return { username: user.username }
+  } catch (err) {
+    return { username: userId }
+  }
+} // end userinfobyid
+
 // Login user service function ================================================
 export async function loginUser({ username, password }) {
   const user = await User.findOne({ username })
@@ -19,9 +30,8 @@ export async function loginUser({ username, password }) {
   if (!isPasswordCorrect) {
     throw new Error('Invalid password!')
   }
-  // Note: If the username and password are correct create a token ============
   const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
-    expiresIn: '12h',
+    expiresIn: '6h',
   })
   return token
 } // end login user

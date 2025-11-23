@@ -9,23 +9,27 @@
 
 */
 import PropTypes from 'prop-types'
+import { User } from './User.jsx'
 
-export function Recipe({ title, author, ingredientList, imageURL }) {
+export function Recipe({ title, author: userId, ingredientList, imageURL }) {
   return (
     <article>
       <h3>{title}</h3>
       <div>
         <pre>{ingredientList}</pre>
       </div>
-      {author && (
-        <em>
-          <br />
-          Written by: <strong>{author}</strong>
-        </em>
-      )}
       <div>
         <img src={imageURL} width='200' height='150' alt={title} />
       </div>
+      {userId && (
+        <em>
+          <br />
+          Written by:{' '}
+          <strong>
+            <User id={userId} />
+          </strong>
+        </em>
+      )}
     </article>
   )
 } // end Recipe
