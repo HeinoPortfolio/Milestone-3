@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getRecipes } from '../api/recipes.js'
 import { useState } from 'react'
 import { Header } from '../components/Header.jsx'
+import { Helmet } from 'react-helmet-async'
 
 export function Blog() {
   // Use states of the BLog application ===================
@@ -34,6 +35,9 @@ export function Blog() {
 
   return (
     <div style={{ padding: 10 }}>
+      <Helmet>
+        <title>The Recipe Blog Home Page</title>
+      </Helmet>
       <Header />
       <CreateRecipe />
       <br />

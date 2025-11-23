@@ -15,15 +15,19 @@ import { AuthContextProvider } from './contexts/AuthContext.jsx'
 // Import Proptypes ==========================================================
 import PropTypes from 'prop-types'
 
+import { HelmetProvider } from 'react-helmet-async'
+
 // Create a new query client to call the backend ==============================
 const queryClient = new QueryClient()
 
 // The application function ===========
 export function App({ children }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>{children}</AuthContextProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   )
 }
 
