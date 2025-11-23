@@ -1,8 +1,21 @@
 import { app } from './app.js'
+import { initDatabase } from './db/init.js'
+import dotenv from 'dotenv'
 
-// Port for the database ======================================================
-const PORT = 3000
+// Function to setup the environment variables ================================
+dotenv.config()
 
-app.listen(PORT)
+// Initialize the database ====================================================
+try {
+  await initDatabase()
 
-console.info(`Express Server running on: http://localhost:${PORT}`)
+  // Get the database port number =============================================
+  const PORT = process.env.PORT
+
+  app.listen(PORT)
+
+  // Display message to terminal about success
+  console.info(`Express Server running on: http://localhost:${PORT}`)
+} catch (err) {
+  console.error('Error connecting to database: ', err)
+}
