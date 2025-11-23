@@ -1,8 +1,8 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-//import cors from 'cors'
+import cors from 'cors'
 
-// Import the routes =====
+// Import the routes ======================================
 import { recipesRoutes } from './routes/recipes.js'
 
 const app = express()
@@ -11,7 +11,7 @@ const app = express()
 app.use(bodyParser.json())
 
 // Use the CORS ===========================================
-//app.use(cors())
+app.use(cors())
 
 // Call the routes functions ==============================
 recipesRoutes(app)
