@@ -1,5 +1,5 @@
-import { initDatabase } from './db/init.js'
-import { Recipe } from './db/models/recipe.js'
+import { initDatabase } from '../db/init.js'
+import { Recipe } from '../db/models/recipe.js'
 
 // Initialize the database ====================================================
 await initDatabase()
