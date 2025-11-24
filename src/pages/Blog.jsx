@@ -4,9 +4,12 @@ import { RecipeFilter } from '../components/RecipeFilter.jsx'
 import { RecipeSorting } from '../components/RecipeSorting.jsx'
 import { useQuery } from '@tanstack/react-query'
 import { getRecipes } from '../api/recipes.js'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Header } from '../components/Header.jsx'
 import { Helmet } from 'react-helmet-async'
+
+import { socket } from '../socket.js'
+import { NotificationPopup } from '../components/NotificationPopup.jsx'
 
 export function Blog() {
   // Use states of the BLog application ===================
@@ -19,6 +22,29 @@ export function Blog() {
   const [author, setAuthor] = useState('')
   const [sortBy, setSortBy] = useState('createdAt')
   const [sortOrder, setSortOrder] = useState('descending')
+
+  const [notification, setNotification] = useState(null)
+
+  // SOCKET.IO STUFF ================================================
+
+  useEffect(() => {
+    const handleNotification = (data) => {
+      setNotification(data)
+    }
+
+    socket.on('receive_notification', handleNotification)
+
+    // Cleanup function to remove the listener when the component unmounts
+    return () => {
+      socket.off('receive_notification', handleNotification)
+    }
+  }, [])
+
+  const closeNotification = () => {
+    setNotification(null)
+  }
+
+  // END SOCKET.IO STUFF =============================================
 
   // Create a usequery instance ===========================
   /* 
@@ -39,6 +65,12 @@ export function Blog() {
         <title>The Recipe Blog Home Page</title>
       </Helmet>
       <Header />
+      <NotificationPopup
+        message={notification?.message}
+        type={notification?.type}
+        link={notification?.link}
+        onClose={closeNotification}
+      />
       <CreateRecipe />
       <br />
       <hr />
