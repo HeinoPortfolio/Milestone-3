@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
       link: 'https://heinoportfolio.github.io/',
       type: 'info',
     })
-  }, 10000) // Emits a notification 5 seconds after connection
+  }, 2000) // Emits a notification 5 seconds after connection
 
   socket.on('disconnect', () => {
     console.log('User disconnected: ', socket.id)
