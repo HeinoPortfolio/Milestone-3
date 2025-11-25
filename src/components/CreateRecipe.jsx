@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createRecipe } from '../api/recipes.js'
 import { useAuth } from '../contexts/AuthContext.jsx'
 
+import { socket } from '../socket.js'
+
 export function CreateRecipe() {
   // Create the states=========================================================
   const [title, setTitle] = useState('')
@@ -22,9 +24,13 @@ export function CreateRecipe() {
       queryClient.invalidateQueries(['recipes']),
         // Review the data returned after creation
         console.log('Recipe ID data: ', data._id),
+        console.log('Recipe Title:', data.title),
         console.log('Author ID data: ', data.author),
         console.log('Image URL link: ', data.imageURL),
         console.log('Contents of ingredient list: ', data.ingredientList)
+
+      // Issue a socket.io message
+      socket.emit('created_recipe', { message: data._id })
       // Set fields to empty =========================
       setTitle(''), setIngredientList(''), setImageURL('')
     },

@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom'
 export const NotificationPopup = ({ message, type, /* link,*/ onClose }) => {
   const some_other_message = 'There is a another '
 
-  const _id = '692372c9c71a162cc4bdcf1c'
+  // const _id = '692372c9c71a162cc4bdcf1c'
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
         onClose()
-      }, 30000) // Auto-hide after 5 seconds 5000
+      }, 10000) // Auto-hide after 5 seconds 5000
       return () => clearTimeout(timer)
     }
   }, [message, onClose])
@@ -21,8 +21,8 @@ export const NotificationPopup = ({ message, type, /* link,*/ onClose }) => {
 
   return (
     <div className={`notification-popup ${type}`}>
-      <p>{message}</p>
-      <Link to={`/recipes/${_id}/`}>
+      <p>New Recipe Created</p>
+      <Link to={`/recipes/${message}/`}>
         <h2 style={{ color: 'white' }}>Click Here To Go To The New Recipe</h2>
       </Link>
       <p>This Message: {some_other_message}</p>

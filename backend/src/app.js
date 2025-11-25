@@ -25,13 +25,20 @@ io.on('connection', (socket) => {
   console.log('User connected: ', socket.id)
 
   // Example: emit a notification event after a delay or on a trigger
+  /*
   setTimeout(() => {
     socket.emit('receive_notification', {
       message: 'A new event occurred!',
-      link: 'https://heinoportfolio.github.io/',
       type: 'info',
     })
-  }, 2000) // Emits a notification 5 seconds after connection
+  }, 2000) // Emits a notification 5 seconds after connection 
+  // */
+
+  // Listen for the event 'operation-success' from the client
+  socket.on('created_recipe', (data) => {
+    console.log('Recipe created:', data.message)
+    socket.broadcast.emit('receive_notification', { message: data.message }) // io.
+  })
 
   socket.on('disconnect', () => {
     console.log('User disconnected: ', socket.id)
