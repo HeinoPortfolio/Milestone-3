@@ -1,18 +1,14 @@
 import { useEffect } from 'react'
 import '../NotificationPopup.css'
 import PropTypes from 'prop-types'
-
 import { Link } from 'react-router-dom'
 
-export const NotificationPopup = ({ message, type, /* link,*/ onClose }) => {
-  const some_other_message = 'There is a another '
-
-  // const _id = '692372c9c71a162cc4bdcf1c'
+export const NotificationPopup = ({ message, type, title, onClose }) => {
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
         onClose()
-      }, 10000) // Auto-hide after 5 seconds 5000
+      }, 10000)
       return () => clearTimeout(timer)
     }
   }, [message, onClose])
@@ -21,13 +17,16 @@ export const NotificationPopup = ({ message, type, /* link,*/ onClose }) => {
 
   return (
     <div className={`notification-popup ${type}`}>
-      <p>New Recipe Created</p>
+      <p
+        style={{ display: 'flex', justifyContent: 'center', fontSize: '36px' }}
+      >
+        New Recipe Created
+      </p>
+      <p style={{ fontSize: '22px' }}>Title: {`${title}`}</p>
       <Link to={`/recipes/${message}/`}>
         <h2 style={{ color: 'white' }}>Click Here To Go To The New Recipe</h2>
       </Link>
-      <p>This Message: {some_other_message}</p>
       <br />
-
       <button onClick={onClose}>&times;</button>
     </div>
   )
@@ -35,6 +34,7 @@ export const NotificationPopup = ({ message, type, /* link,*/ onClose }) => {
 
 NotificationPopup.propTypes = {
   message: PropTypes.string,
+  title: PropTypes.string,
   type: PropTypes.string,
   link: PropTypes.string,
   onClose: PropTypes.func,

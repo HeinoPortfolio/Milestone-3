@@ -69,6 +69,7 @@ export function Blog() {
         message={notification?.message}
         type={notification?.type}
         link={notification?.link}
+        title={notification?.title}
         onClose={closeNotification}
       />
       <CreateRecipe />

@@ -22,15 +22,8 @@ export function CreateRecipe() {
     mutationFn: () => createRecipe(token, { title, ingredientList, imageURL }),
     onSuccess: (data) => {
       queryClient.invalidateQueries(['recipes']),
-        // Review the data returned after creation
-        console.log('Recipe ID data: ', data._id),
-        console.log('Recipe Title:', data.title),
-        console.log('Author ID data: ', data.author),
-        console.log('Image URL link: ', data.imageURL),
-        console.log('Contents of ingredient list: ', data.ingredientList)
-
-      // Issue a socket.io message
-      socket.emit('created_recipe', { message: data._id })
+        // Issue a socket.io message
+        socket.emit('created_recipe', { message: data._id, title: data.title })
       // Set fields to empty =========================
       setTitle(''), setIngredientList(''), setImageURL('')
     },
