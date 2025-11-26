@@ -23,7 +23,7 @@ export function CreateRecipe() {
     onSuccess: (data) => {
       queryClient.invalidateQueries(['recipes']),
         // Issue a socket.io message
-        socket.emit('created_recipe', { message: data._id, title: data.title })
+        socket.emit('created_recipe', { link: data._id, title: data.title })
       // Set fields to empty =========================
       setTitle(''), setIngredientList(''), setImageURL('')
     },

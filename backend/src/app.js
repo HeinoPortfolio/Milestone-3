@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
     */
     // To emit to all the users including the sender ==============
     io.emit('receive_notification', {
-      message: data.message,
+      link: data.link,
       title: data.title,
     }) // io.
   })

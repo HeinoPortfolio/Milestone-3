@@ -3,17 +3,17 @@ import '../NotificationPopup.css'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-export const NotificationPopup = ({ message, type, title, onClose }) => {
+export const NotificationPopup = ({ link, type, title, onClose }) => {
   useEffect(() => {
-    if (message) {
+    if (link) {
       const timer = setTimeout(() => {
         onClose()
       }, 30000)
       return () => clearTimeout(timer)
     }
-  }, [message, onClose])
+  }, [link, onClose])
 
-  if (!message) return null
+  if (!link) return null
 
   return (
     <div className={`notification-popup ${type}`}>
@@ -29,7 +29,7 @@ export const NotificationPopup = ({ message, type, title, onClose }) => {
       <br />
       <span style={{ fontSize: '26px' }}>
         To go to the new recipe post: &nbsp; &nbsp;
-        <Link to={`/recipes/${message}/`}>
+        <Link to={`/recipes/${link}/`}>
           <b style={{ color: 'blue' }}>Click Here </b>
         </Link>
       </span>
@@ -49,7 +49,6 @@ export const NotificationPopup = ({ message, type, title, onClose }) => {
 }
 
 NotificationPopup.propTypes = {
-  message: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,
   link: PropTypes.string,
