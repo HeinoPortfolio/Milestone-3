@@ -24,7 +24,7 @@ const io = new SocketIOServer(server, {
 io.on('connection', (socket) => {
   console.log('User connected: ', socket.id)
 
-  // Listen for the event 'operation-success' from the client
+  // Listen for the event 'create-recipe' from the client
   socket.on('created_recipe', (data) => {
     // To emit to all users/clients except the original sender =======
     /*
