@@ -8,7 +8,7 @@ export const NotificationPopup = ({ message, type, title, onClose }) => {
     if (message) {
       const timer = setTimeout(() => {
         onClose()
-      }, 10000)
+      }, 30000)
       return () => clearTimeout(timer)
     }
   }, [message, onClose])
@@ -18,16 +18,32 @@ export const NotificationPopup = ({ message, type, title, onClose }) => {
   return (
     <div className={`notification-popup ${type}`}>
       <p
-        style={{ display: 'flex', justifyContent: 'center', fontSize: '36px' }}
+        style={{ display: 'flex', justifyContent: 'center', fontSize: '28px' }}
       >
-        New Recipe Created
+        New Recipe Created!!!
       </p>
-      <p style={{ fontSize: '22px' }}>Title: {`${title}`}</p>
-      <Link to={`/recipes/${message}/`}>
-        <h2 style={{ color: 'white' }}>Click Here To Go To The New Recipe</h2>
-      </Link>
+      <span style={{ fontSize: '26px' }}>
+        <b>Title: &nbsp; &nbsp; {`${title}`}</b>
+      </span>
       <br />
-      <button onClick={onClose}>&times;</button>
+      <br />
+      <span style={{ fontSize: '26px' }}>
+        To go to the new recipe post: &nbsp; &nbsp;
+        <Link to={`/recipes/${message}/`}>
+          <b style={{ color: 'blue' }}>Click Here </b>
+        </Link>
+      </span>
+      <br />
+      <br />
+      <div className='popup-content'>
+        <button
+          style={{ fontSize: '24px', border: '2px solid white' }}
+          onClick={onClose}
+        >
+          {' '}
+          Click To Close{' '}
+        </button>
+      </div>
     </div>
   )
 }

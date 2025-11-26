@@ -26,7 +26,15 @@ io.on('connection', (socket) => {
 
   // Listen for the event 'operation-success' from the client
   socket.on('created_recipe', (data) => {
+    // To emit to all users/clients except the original sender =======
+    /*
     socket.broadcast.emit('receive_notification', {
+      message: data.message,
+      title: data.title,
+    }) // io. 
+    */
+    // To emit to all the users including the sender ==============
+    io.emit('receive_notification', {
       message: data.message,
       title: data.title,
     }) // io.
