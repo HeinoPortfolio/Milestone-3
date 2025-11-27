@@ -27,17 +27,17 @@ io.on('connection', (socket) => {
   // Listen for the event 'create-recipe' from the client
   socket.on('created_recipe', (data) => {
     // To emit to all users/clients except the original sender =======
-    /*
+
     socket.broadcast.emit('receive_notification', {
-      message: data.message,
+      link: data.link,
       title: data.title,
-    }) // io. 
-    */
+    }) // io.
+    /*
     // To emit to all the users including the sender ==============
     io.emit('receive_notification', {
       link: data.link,
       title: data.title,
-    }) // io.
+    }) // io.*/
   })
 
   socket.on('disconnect', () => {
